@@ -3,14 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crop Recommendation</title>
-    <!-- Load Tailwind CSS -->
+    <title>Smart Crop Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom font */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+        
+        input[type="number"] {
+            padding-left: 2.5rem !important;
+        }
+        
+        .result-card {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .bg-pattern {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
         }
     </style>
     <script>
@@ -18,101 +69,117 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#10b981', /* Emerald */
-                        'secondary': '#1f2937', /* Gray-800 */
+                        'primary': '#10b981',
+                        'secondary': '#1f2937',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4 bg-pattern">
 
-    <div class="w-full max-w-xl bg-white shadow-2xl rounded-xl p-8 space-y-8">
+    <div class="w-full max-w-2xl bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-10 space-y-8 fade-in-up">
         <!-- Header -->
         <header class="text-center">
-            <h1 class="text-4xl font-extrabold text-primary tracking-tight">
+            <div class="mb-4 text-6xl">🌾</div>
+            <h1 class="text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent tracking-tight">
                 Smart Crop Predictor
             </h1>
-            <p class="mt-2 text-lg text-gray-500">
-                Enter your soil and environmental parameters to get a recommendation.
+            <p class="mt-3 text-lg text-gray-600">
+                Enter your soil and environmental parameters to get an AI-powered recommendation
             </p>
         </header>
 
         <!-- Prediction Form -->
-        <form id="predictionForm" class="grid grid-cols-2 gap-x-6 gap-y-4">
+        <form id="predictionForm" class="grid grid-cols-2 gap-x-6 gap-y-6">
             
             <!-- N (Nitrogen) -->
-            <div>
-                <label for="N" class="block text-sm font-medium text-secondary">Nitrogen (N) - kg/ha</label>
+            <div class="input-group">
+                <label for="N" class="block text-sm font-semibold text-gray-700 mb-2">Nitrogen (N)</label>
+                <span class="input-icon">🧪</span>
                 <input type="number" id="N" name="N" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50 transition duration-150 ease-in-out"
-                    placeholder="e.g., 90">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="kg/ha (e.g., 90)">
             </div>
 
             <!-- P (Phosphorus) -->
-            <div>
-                <label for="P" class="block text-sm font-medium text-secondary">Phosphorus (P) - kg/ha</label>
+            <div class="input-group">
+                <label for="P" class="block text-sm font-semibold text-gray-700 mb-2">Phosphorus (P)</label>
+                <span class="input-icon">⚗️</span>
                 <input type="number" id="P" name="P" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50"
-                    placeholder="e.g., 42">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="kg/ha (e.g., 42)">
             </div>
 
             <!-- K (Potassium) -->
-            <div>
-                <label for="K" class="block text-sm font-medium text-secondary">Potassium (K) - kg/ha</label>
+            <div class="input-group">
+                <label for="K" class="block text-sm font-semibold text-gray-700 mb-2">Potassium (K)</label>
+                <span class="input-icon">💊</span>
                 <input type="number" id="K" name="K" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50"
-                    placeholder="e.g., 43">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="kg/ha (e.g., 43)">
             </div>
 
             <!-- Temperature -->
-            <div>
-                <label for="temperature" class="block text-sm font-medium text-secondary">Temperature - °C</label>
+            <div class="input-group">
+                <label for="temperature" class="block text-sm font-semibold text-gray-700 mb-2">Temperature</label>
+                <span class="input-icon">🌡️</span>
                 <input type="number" id="temperature" name="temperature" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50"
-                    placeholder="e.g., 20.87">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="°C (e.g., 20.87)">
             </div>
             
             <!-- Humidity -->
-            <div>
-                <label for="humidity" class="block text-sm font-medium text-secondary">Humidity - %</label>
+            <div class="input-group">
+                <label for="humidity" class="block text-sm font-semibold text-gray-700 mb-2">Humidity</label>
+                <span class="input-icon">💧</span>
                 <input type="number" id="humidity" name="humidity" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50"
-                    placeholder="e.g., 82.0">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="% (e.g., 82.0)">
             </div>
 
             <!-- pH -->
-            <div>
-                <label for="ph" class="block text-sm font-medium text-secondary">pH Level (Acidity)</label>
+            <div class="input-group">
+                <label for="ph" class="block text-sm font-semibold text-gray-700 mb-2">pH Level</label>
+                <span class="input-icon">🧬</span>
                 <input type="number" id="ph" name="ph" step="any" required
-                    class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary p-3 bg-gray-50"
-                    placeholder="e.g., 6.5">
+                    class="block w-full rounded-xl border-2 border-gray-200 shadow-sm focus:border-emerald-400 focus:ring-emerald-400 p-3 bg-white/80 transition-all duration-200 hover:border-emerald-300"
+                    placeholder="Acidity (e.g., 6.5)">
             </div>
 
             <!-- Submit Button (Full Width) -->
-            <div class="col-span-2">
+            <div class="col-span-2 mt-4">
                 <button type="submit" id="submitButton"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-lg font-medium text-white bg-primary hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out">
+                    class="w-full flex justify-center items-center gap-2 py-4 px-6 border border-transparent rounded-xl shadow-lg text-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-emerald-300 transition-all duration-200 transform hover:scale-105 active:scale-95">
+                    <span>🔍</span>
                     Get Recommendation
                 </button>
             </div>
         </form>
 
         <!-- Result Display -->
-        <div id="resultContainer" class="mt-8 pt-6 border-t border-gray-200 hidden">
-            <h2 class="text-xl font-semibold text-secondary mb-3">Recommendation:</h2>
-            <p id="recommendationText" class="text-3xl font-extrabold text-center p-4 bg-primary/10 rounded-lg text-primary"></p>
-            <p id="errorText" class="text-lg font-medium text-center p-4 bg-red-100 rounded-lg text-red-700 hidden"></p>
+        <div id="resultContainer" class="mt-6 hidden">
+            <div class="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-8 border-2 border-emerald-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center flex items-center justify-center gap-2">
+                    <span>✨</span>
+                    <span>Recommended Crop</span>
+                </h2>
+                <div id="recommendationText" class="text-5xl font-black text-center p-6 bg-white rounded-xl text-emerald-600 result-card shadow-lg"></div>
+                <p id="errorText" class="text-lg font-medium text-center p-4 bg-red-100 rounded-xl text-red-700 hidden mt-4"></p>
+            </div>
         </div>
         
         <!-- Loading Indicator -->
-        <div id="loadingIndicator" class="text-center p-4 hidden">
-            <svg class="animate-spin h-6 w-6 text-primary mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p class="text-secondary mt-2">Analyzing parameters...</p>
+        <div id="loadingIndicator" class="text-center p-8 hidden">
+            <div class="flex flex-col items-center">
+                <svg class="animate-spin h-12 w-12 text-emerald-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-700 text-lg font-semibold">🌱 Analyzing your parameters...</p>
+                <p class="text-gray-500 text-sm mt-1">Our AI is finding the perfect crop for you</p>
+            </div>
         </div>
 
     </div>

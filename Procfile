@@ -1,0 +1,1 @@
+web: cd backend && gunicorn securecrop.wsgi --log-file -
